@@ -10,10 +10,11 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=Inter:wght@500;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=Inter:wght@500;600;700;800;900&display=swap" rel="stylesheet">
 
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
                     fontFamily: {
@@ -26,19 +27,28 @@
     </script>
 
     <style>
+        /* SVĚTLÝ REŽIM (VÝCHOZÍ - PRO TABULI) */
         body {
+            background-color: #f1f5f9;
+            color: #0f172a;
+            background-image: radial-gradient(rgba(14, 165, 233, 0.18) 1.5px, transparent 1.5px);
+            background-size: 26px 26px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* TMAVÝ REŽIM (VOLITELNÝ) */
+        body.dark {
             background-color: #070d19;
             color: #f1f5f9;
             background-image: radial-gradient(rgba(14, 165, 233, 0.1) 1.5px, transparent 1.5px);
-            background-size: 28px 28px;
         }
 
         .layer-box {
             transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .layer-active {
-            transform: scale(1.015);
-            box-shadow: 0 0 40px var(--glow-color);
+            transform: scale(1.018);
+            box-shadow: 0 0 35px var(--glow-color);
             border-color: var(--border-color) !important;
         }
 
@@ -53,7 +63,7 @@
 
         @keyframes pulseRing {
             0% { transform: scale(0.9); opacity: 0.8; }
-            50% { transform: scale(1.3); opacity: 0.2; }
+            50% { transform: scale(1.35); opacity: 0.2; }
             100% { transform: scale(0.9); opacity: 0.8; }
         }
         .pulse-ring {
@@ -64,23 +74,28 @@
 <body class="min-h-screen flex flex-col font-sans select-none overflow-x-hidden p-3 md:p-6 justify-between">
 
     <!-- HORNÍ LIŠTA -->
-    <header class="max-w-7xl w-full mx-auto flex items-center justify-between bg-slate-900/90 border border-slate-700/80 rounded-2xl px-6 py-3.5 shadow-xl backdrop-blur-md mb-4">
+    <header class="max-w-7xl w-full mx-auto flex items-center justify-between bg-white dark:bg-slate-900/90 border-2 border-slate-300 dark:border-slate-700/80 rounded-2xl px-6 py-3.5 shadow-lg backdrop-blur-md mb-4 transition-colors">
         <div class="flex items-center gap-4">
-            <div class="bg-cyan-500/20 text-cyan-400 p-2.5 rounded-xl border border-cyan-500/30">
+            <div class="bg-sky-100 dark:bg-cyan-500/20 text-sky-700 dark:text-cyan-400 p-2.5 rounded-xl border-2 border-sky-300 dark:border-cyan-500/30">
                 <i data-lucide="database" class="w-8 h-8"></i>
             </div>
             <div>
-                <h1 class="text-xl md:text-2xl font-tech font-bold tracking-wider text-white uppercase">Jak funguje školní informační systém?</h1>
-                <p class="text-xs text-slate-400 font-sans">Role uživatelů ➔ Kontrola práv ➔ Centrální databáze (Edookit / Škola OnLine / Bakaláři)</p>
+                <h1 class="text-xl md:text-2xl font-tech font-bold tracking-wider text-slate-900 dark:text-white uppercase">Jak funguje školní informační systém?</h1>
+                <p class="text-xs text-slate-600 dark:text-slate-400 font-sans font-medium">Role uživatelů ➔ Kontrola práv ➔ Centrální databáze (Edookit / Škola OnLine / Bakaláři)</p>
             </div>
         </div>
 
-        <div class="flex items-center gap-3">
-            <button onclick="toggleSound()" id="btn-sound" class="bg-slate-800 hover:bg-slate-700 text-slate-300 px-4 py-2 rounded-xl border border-slate-600 font-bold text-sm flex items-center gap-2 transition active:scale-95">
-                <i data-lucide="volume-2" id="sound-icon" class="w-5 h-5 text-cyan-400"></i>
+        <div class="flex items-center gap-2 md:gap-3">
+            <!-- PŘEPÍNAČ SVĚTLÉHO / TMAVÉHO REŽIMU -->
+            <button onclick="toggleTheme()" id="btn-theme" class="bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 px-3.5 py-2 rounded-xl border-2 border-slate-300 dark:border-slate-600 font-bold text-sm flex items-center gap-2 transition active:scale-95 shadow-sm">
+                <i data-lucide="sun" id="theme-icon" class="w-5 h-5 text-amber-500"></i>
+                <span id="theme-text">Režim: Světlý</span>
+            </button>
+            <button onclick="toggleSound()" id="btn-sound" class="bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 px-3.5 py-2 rounded-xl border-2 border-slate-300 dark:border-slate-600 font-bold text-sm flex items-center gap-2 transition active:scale-95 shadow-sm">
+                <i data-lucide="volume-2" id="sound-icon" class="w-5 h-5 text-sky-600 dark:text-cyan-400"></i>
                 <span id="sound-text">Zvuk ZAP</span>
             </button>
-            <button onclick="toggleFullscreen()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 p-2 rounded-xl border border-slate-600 transition active:scale-95" title="Režim celé obrazovky">
+            <button onclick="toggleFullscreen()" class="bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 p-2 rounded-xl border-2 border-slate-300 dark:border-slate-600 transition active:scale-95 shadow-sm" title="Režim celé obrazovky">
                 <i data-lucide="maximize" class="w-6 h-6"></i>
             </button>
         </div>
@@ -90,20 +105,20 @@
     <main class="max-w-7xl w-full mx-auto flex-1 grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch my-auto">
         
         <!-- LEVÁ ČÁST: 3 VRSTVY INFORMAČNÍHO SYSTÉMU -->
-        <section id="diagram-section" class="lg:col-span-8 relative flex flex-col justify-between gap-4 bg-slate-900/40 p-4 md:p-6 rounded-3xl border border-slate-800 shadow-2xl">
+        <section id="diagram-section" class="lg:col-span-8 relative flex flex-col justify-between gap-4 bg-white/80 dark:bg-slate-900/40 p-4 md:p-6 rounded-3xl border-2 border-slate-300 dark:border-slate-800 shadow-xl backdrop-blur-sm transition-colors">
             
             <!-- Svislá vodicí sběrnice -->
-            <div id="bus-rail" class="absolute top-12 bottom-12 w-1.5 bg-gradient-to-b from-sky-400 via-amber-400 to-emerald-400 opacity-20 z-10 pointer-events-none rounded-full transition-all"></div>
+            <div id="bus-rail" class="absolute top-12 bottom-12 w-2 bg-gradient-to-b from-sky-500 via-amber-500 to-emerald-500 opacity-40 dark:opacity-25 z-10 pointer-events-none rounded-full transition-all"></div>
 
             <!-- Pohyblivý světelný impulz -->
-            <div id="data-packet" class="absolute z-30 w-11 h-11 rounded-full border-2 border-white pointer-events-none opacity-0 flex items-center justify-center text-slate-950 font-black shadow-2xl">
+            <div id="data-packet" class="absolute z-30 w-12 h-12 rounded-full border-3 border-white pointer-events-none opacity-0 flex items-center justify-center text-slate-950 font-black shadow-2xl">
                 <div class="absolute inset-0 rounded-full bg-inherit pulse-ring"></div>
-                <span id="packet-icon" class="relative z-10 text-lg">📨</span>
+                <span id="packet-icon" class="relative z-10 text-xl">📨</span>
             </div>
 
             <!-- 1. PATRO: UŽIVATELÉ A JEJICH ROLE -->
-            <div id="layer-roles" style="--glow-color: rgba(56,189,248,0.45); --border-color: #38bdf8;" class="layer-box relative z-20 bg-slate-800/90 border-2 border-slate-700/80 rounded-2xl p-4 md:p-5 flex items-center gap-5">
-                <div class="w-20 h-20 md:w-24 md:h-24 shrink-0 rounded-2xl bg-sky-500/20 text-sky-400 flex items-center justify-center border-2 border-sky-500/40 shadow-inner relative">
+            <div id="layer-roles" style="--glow-color: rgba(2,132,199,0.35); --border-color: #0284c7;" class="layer-box relative z-20 bg-white dark:bg-slate-800/90 border-2 border-sky-400 dark:border-slate-700/80 rounded-2xl p-4 md:p-5 flex items-center gap-5 shadow-md">
+                <div class="w-20 h-20 md:w-24 md:h-24 shrink-0 rounded-2xl bg-sky-100 dark:bg-sky-500/20 text-sky-700 dark:text-sky-400 flex items-center justify-center border-2 border-sky-300 dark:border-sky-500/40 shadow-inner relative">
                     <i data-lucide="users" class="w-12 h-12 md:w-16 md:h-16 stroke-[1.75]"></i>
                     <!-- Neviditelný kotevní bod pro přesnou polohu -->
                     <div id="dock-roles" class="absolute -top-2.5 -left-2.5 w-10 h-10 pointer-events-none"></div>
@@ -111,65 +126,63 @@
 
                 <div class="flex-1">
                     <div class="flex items-center gap-3">
-                        <span class="text-xs font-tech font-bold uppercase tracking-widest text-sky-400 bg-sky-950/80 px-2.5 py-0.5 rounded border border-sky-500/30">1. Patro</span>
-                        <h2 class="text-2xl md:text-3xl font-black text-white tracking-wide">ROLE UŽIVATELŮ</h2>
+                        <span class="text-xs font-tech font-bold uppercase tracking-widest text-sky-800 dark:text-sky-400 bg-sky-100 dark:bg-sky-950/80 px-2.5 py-0.5 rounded border border-sky-300 dark:border-sky-500/30">1. Patro</span>
+                        <h2 class="text-2xl md:text-3xl font-black text-slate-900 dark:text-white tracking-wide">ROLE UŽIVATELŮ</h2>
                     </div>
                     <div class="mt-2.5 grid grid-cols-3 gap-2 text-sm font-bold">
-                        <div class="bg-slate-900/90 p-2 rounded-xl border border-slate-700 text-center">
-                            <span class="text-xl block mb-0.5">👨‍🏫</span>
-                            <span class="text-sky-300">Učitel</span>
+                        <div class="bg-slate-50 dark:bg-slate-900/90 p-2 rounded-xl border border-slate-300 dark:border-slate-700 text-center shadow-sm">
+                            <span class="text-2xl block mb-0.5">👨‍🏫</span>
+                            <span class="text-sky-800 dark:text-sky-300 font-extrabold">Učitel</span>
                         </div>
-                        <div class="bg-slate-900/90 p-2 rounded-xl border border-slate-700 text-center">
-                            <span class="text-xl block mb-0.5">👦</span>
-                            <span class="text-emerald-300">Žák</span>
+                        <div class="bg-slate-50 dark:bg-slate-900/90 p-2 rounded-xl border border-slate-300 dark:border-slate-700 text-center shadow-sm">
+                            <span class="text-2xl block mb-0.5">👦</span>
+                            <span class="text-emerald-800 dark:text-emerald-300 font-extrabold">Žák</span>
                         </div>
-                        <div class="bg-slate-900/90 p-2 rounded-xl border border-slate-700 text-center">
-                            <span class="text-xl block mb-0.5">👩‍👧</span>
-                            <span class="text-purple-300">Rodič</span>
+                        <div class="bg-slate-50 dark:bg-slate-900/90 p-2 rounded-xl border border-slate-300 dark:border-slate-700 text-center shadow-sm">
+                            <span class="text-2xl block mb-0.5">👩‍👧</span>
+                            <span class="text-purple-800 dark:text-purple-300 font-extrabold">Rodič</span>
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- 2. PATRO: INFORMAČNÍ SYSTÉM (KONTROLA PRÁV) -->
-            <div id="layer-app" style="--glow-color: rgba(245,158,11,0.55); --border-color: #f59e0b;" class="layer-box relative z-20 bg-gradient-to-r from-amber-950/40 via-slate-800 to-slate-800/95 border-3 border-amber-500/60 rounded-2xl p-4 md:p-5 flex items-center gap-5 shadow-xl">
-                <div class="w-20 h-20 md:w-24 md:h-24 shrink-0 rounded-2xl bg-amber-500/25 text-amber-400 flex items-center justify-center border-2 border-amber-500/60 shadow-[0_0_30px_rgba(245,158,11,0.25)] relative">
+            <div id="layer-app" style="--glow-color: rgba(217,119,6,0.35); --border-color: #d97706;" class="layer-box relative z-20 bg-amber-50/70 dark:bg-gradient-to-r dark:from-amber-950/40 dark:via-slate-800 dark:to-slate-800/95 border-3 border-amber-500 dark:border-amber-500/60 rounded-2xl p-4 md:p-5 flex items-center gap-5 shadow-md">
+                <div class="w-20 h-20 md:w-24 md:h-24 shrink-0 rounded-2xl bg-amber-100 dark:bg-amber-500/25 text-amber-700 dark:text-amber-400 flex items-center justify-center border-2 border-amber-400 dark:border-amber-500/60 shadow-[0_0_25px_rgba(245,158,11,0.2)] relative">
                     <i data-lucide="shield-check" class="w-12 h-12 md:w-16 md:h-16 stroke-[1.75]"></i>
-                    <!-- Neviditelný kotevní bod pro přesnou polohu -->
                     <div id="dock-app" class="absolute -top-2.5 -left-2.5 w-10 h-10 pointer-events-none"></div>
                 </div>
 
                 <div class="flex-1">
                     <div class="flex items-center gap-3">
-                        <span class="text-xs font-tech font-bold uppercase tracking-widest text-amber-300 bg-amber-950 px-2.5 py-0.5 rounded border border-amber-500/50">2. Patro — LOGIKA & PRAVIDLA</span>
-                        <h2 class="text-2xl md:text-3xl font-black text-amber-300 tracking-wide">KONTROLA OPRÁVNĚNÍ</h2>
+                        <span class="text-xs font-tech font-bold uppercase tracking-widest text-amber-900 dark:text-amber-300 bg-amber-200/80 dark:bg-amber-950 px-2.5 py-0.5 rounded border border-amber-400 dark:border-amber-500/50">2. Patro — PRAVIDLA & PRÁVA</span>
+                        <h2 class="text-2xl md:text-3xl font-black text-amber-950 dark:text-amber-300 tracking-wide">KONTROLA OPRÁVNĚNÍ</h2>
                     </div>
                     <div class="mt-2.5 flex flex-wrap gap-2 text-sm font-bold">
-                        <span class="bg-amber-950/80 text-amber-200 px-3 py-1.5 rounded-lg border border-amber-500/40">🔒 Kdo se přihlásil?</span>
-                        <span class="bg-amber-950/80 text-amber-200 px-3 py-1.5 rounded-lg border border-amber-500/40">✍️ Smí data měnit?</span>
-                        <span class="bg-amber-950/80 text-amber-200 px-3 py-1.5 rounded-lg border border-amber-500/40">👀 Smí je jen číst?</span>
+                        <span class="bg-white dark:bg-amber-950/80 text-amber-900 dark:text-amber-200 px-3 py-1.5 rounded-lg border border-amber-300 dark:border-amber-500/40 shadow-sm">🔒 Kdo se přihlásil?</span>
+                        <span class="bg-white dark:bg-amber-950/80 text-amber-900 dark:text-amber-200 px-3 py-1.5 rounded-lg border border-amber-300 dark:border-amber-500/40 shadow-sm">✍️ Smí data měnit?</span>
+                        <span class="bg-white dark:bg-amber-950/80 text-amber-900 dark:text-amber-200 px-3 py-1.5 rounded-lg border border-amber-300 dark:border-amber-500/40 shadow-sm">👀 Smí je jen číst?</span>
                     </div>
                 </div>
             </div>
 
             <!-- 3. PATRO: CENTRÁLNÍ DATABÁZE & SERVER -->
-            <div id="layer-db" style="--glow-color: rgba(16,185,129,0.45); --border-color: #10b981;" class="layer-box relative z-20 bg-slate-800/90 border-2 border-slate-700/80 rounded-2xl p-4 md:p-5 flex items-center gap-5">
-                <div class="w-20 h-20 md:w-24 md:h-24 shrink-0 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center border-2 border-emerald-500/40 shadow-inner relative">
+            <div id="layer-db" style="--glow-color: rgba(5,150,105,0.35); --border-color: #059669;" class="layer-box relative z-20 bg-white dark:bg-slate-800/90 border-2 border-emerald-400 dark:border-slate-700/80 rounded-2xl p-4 md:p-5 flex items-center gap-5 shadow-md">
+                <div class="w-20 h-20 md:w-24 md:h-24 shrink-0 rounded-2xl bg-emerald-100 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-400 flex items-center justify-center border-2 border-emerald-300 dark:border-emerald-500/40 shadow-inner relative">
                     <i data-lucide="server" class="w-12 h-12 md:w-16 md:h-16 stroke-[1.75]"></i>
-                    <!-- Neviditelný kotevní bod pro přesnou polohu -->
                     <div id="dock-db" class="absolute -top-2.5 -left-2.5 w-10 h-10 pointer-events-none"></div>
                 </div>
 
                 <div class="flex-1">
                     <div class="flex items-center gap-3">
-                        <span class="text-xs font-tech font-bold uppercase tracking-widest text-emerald-400 bg-emerald-950/80 px-2.5 py-0.5 rounded border border-emerald-500/30">3. Patro</span>
-                        <h2 class="text-2xl md:text-3xl font-black text-white tracking-wide">CENTRÁLNÍ DATABÁZE</h2>
+                        <span class="text-xs font-tech font-bold uppercase tracking-widest text-emerald-900 dark:text-emerald-400 bg-emerald-100 dark:bg-emerald-950/80 px-2.5 py-0.5 rounded border border-emerald-300 dark:border-emerald-500/30">3. Patro</span>
+                        <h2 class="text-2xl md:text-3xl font-black text-slate-900 dark:text-white tracking-wide">CENTRÁLNÍ DATABÁZE</h2>
                     </div>
-                    <div class="mt-2.5 flex flex-wrap gap-2 text-sm font-bold text-slate-300">
-                        <span class="bg-slate-900/90 px-3 py-1 rounded-lg border border-slate-700 flex items-center gap-1.5">📊 Známky</span>
-                        <span class="bg-slate-900/90 px-3 py-1 rounded-lg border border-slate-700 flex items-center gap-1.5">🩹 Absence</span>
-                        <span class="bg-slate-900/90 px-3 py-1 rounded-lg border border-slate-700 flex items-center gap-1.5">📅 Rozvrh hodin</span>
-                        <span class="bg-slate-900/90 px-3 py-1 rounded-lg border border-slate-700 flex items-center gap-1.5">🍽️ Obědy</span>
+                    <div class="mt-2.5 flex flex-wrap gap-2 text-sm font-bold text-slate-800 dark:text-slate-300">
+                        <span class="bg-slate-50 dark:bg-slate-900/90 px-3 py-1 rounded-lg border border-slate-300 dark:border-slate-700 flex items-center gap-1.5 shadow-sm">📊 Známky</span>
+                        <span class="bg-slate-50 dark:bg-slate-900/90 px-3 py-1 rounded-lg border border-slate-300 dark:border-slate-700 flex items-center gap-1.5 shadow-sm">🩹 Absence</span>
+                        <span class="bg-slate-50 dark:bg-slate-900/90 px-3 py-1 rounded-lg border border-slate-300 dark:border-slate-700 flex items-center gap-1.5 shadow-sm">📅 Rozvrh hodin</span>
+                        <span class="bg-slate-50 dark:bg-slate-900/90 px-3 py-1 rounded-lg border border-slate-300 dark:border-slate-700 flex items-center gap-1.5 shadow-sm">🍽️ Obědy</span>
                     </div>
                 </div>
             </div>
@@ -179,77 +192,77 @@
         <section class="lg:col-span-4 flex flex-col justify-between gap-4">
             
             <!-- TLAČÍTKA SCÉNÁŘŮ -->
-            <div class="bg-slate-900/80 border border-slate-700 rounded-3xl p-5 shadow-xl">
-                <h3 class="text-xs font-tech font-bold uppercase tracking-wider text-slate-400 mb-3 flex items-center gap-2">
-                    <i data-lucide="play" class="w-4 h-4 text-cyan-400"></i> Vyber školní situaci:
+            <div class="bg-white dark:bg-slate-900/80 border-2 border-slate-300 dark:border-slate-700 rounded-3xl p-5 shadow-xl transition-colors">
+                <h3 class="text-xs font-tech font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 mb-3 flex items-center gap-2">
+                    <i data-lucide="play" class="w-4 h-4 text-sky-600 dark:text-cyan-400"></i> Vyber školní situaci:
                 </h3>
                 
                 <div class="grid grid-cols-1 gap-2.5">
-                    <button onclick="startScenario('grade')" class="scenario-btn text-left p-3.5 rounded-2xl border-2 border-slate-700 bg-slate-800/80 hover:bg-slate-750 text-white font-bold transition flex items-center gap-4 active:scale-98">
+                    <button onclick="startScenario('grade')" class="scenario-btn text-left p-3.5 rounded-2xl border-2 border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/80 hover:bg-sky-50 dark:hover:bg-slate-750 text-slate-900 dark:text-white font-bold transition flex items-center gap-4 active:scale-98 shadow-sm">
                         <span class="text-3xl shrink-0">📝</span>
                         <div>
-                            <div class="text-base text-white">1. Učitel zadá jedničku</div>
-                            <div class="text-xs text-slate-400 font-medium">Zápis do databáze ➔ Notifikace v mobilu</div>
+                            <div class="text-base text-slate-900 dark:text-white">1. Učitel zadá jedničku</div>
+                            <div class="text-xs text-slate-600 dark:text-slate-400 font-medium">Zápis do databáze ➔ Notifikace v mobilu</div>
                         </div>
                     </button>
 
-                    <button onclick="startScenario('hack')" class="scenario-btn text-left p-3.5 rounded-2xl border-2 border-red-500/40 bg-red-950/20 hover:bg-red-950/40 text-red-300 font-bold transition flex items-center gap-4 active:scale-98">
+                    <button onclick="startScenario('hack')" class="scenario-btn text-left p-3.5 rounded-2xl border-2 border-red-300 dark:border-red-500/40 bg-red-50 dark:bg-red-950/20 hover:bg-red-100 dark:hover:bg-red-950/40 text-red-900 dark:text-red-300 font-bold transition flex items-center gap-4 active:scale-98 shadow-sm">
                         <span class="text-3xl shrink-0">🕵️</span>
                         <div>
-                            <div class="text-base text-red-400">2. Žák zkouší přepsat 5 na 1</div>
-                            <div class="text-xs text-red-300/70 font-medium">Jak zafunguje kontrola práv (STOP!)</div>
+                            <div class="text-base text-red-700 dark:text-red-400">2. Žák zkouší přepsat 5 na 1</div>
+                            <div class="text-xs text-red-600/80 dark:text-red-300/70 font-medium">Jak zafunguje kontrola práv (STOP!)</div>
                         </div>
                     </button>
 
-                    <button onclick="startScenario('sick')" class="scenario-btn text-left p-3.5 rounded-2xl border-2 border-slate-700 bg-slate-800/80 hover:bg-slate-750 text-white font-bold transition flex items-center gap-4 active:scale-98">
+                    <button onclick="startScenario('sick')" class="scenario-btn text-left p-3.5 rounded-2xl border-2 border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/80 hover:bg-sky-50 dark:hover:bg-slate-750 text-slate-900 dark:text-white font-bold transition flex items-center gap-4 active:scale-98 shadow-sm">
                         <span class="text-3xl shrink-0">🩹</span>
                         <div>
-                            <div class="text-base text-white">3. Omluvenka od rodiče</div>
-                            <div class="text-xs text-slate-400 font-medium">Rodič omluví ➔ Třídní učitel vidí</div>
+                            <div class="text-base text-slate-900 dark:text-white">3. Omluvenka od rodiče</div>
+                            <div class="text-xs text-slate-600 dark:text-slate-400 font-medium">Rodič omluví ➔ Třídní učitel vidí</div>
                         </div>
                     </button>
 
-                    <button onclick="startScenario('lunch')" class="scenario-btn text-left p-3.5 rounded-2xl border-2 border-slate-700 bg-slate-800/80 hover:bg-slate-750 text-white font-bold transition flex items-center gap-4 active:scale-98">
+                    <button onclick="startScenario('lunch')" class="scenario-btn text-left p-3.5 rounded-2xl border-2 border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/80 hover:bg-sky-50 dark:hover:bg-slate-750 text-slate-900 dark:text-white font-bold transition flex items-center gap-4 active:scale-98 shadow-sm">
                         <span class="text-3xl shrink-0">🍽️</span>
                         <div>
-                            <div class="text-base text-white">4. Odhlášení oběda</div>
-                            <div class="text-xs text-slate-400 font-medium">Žák odhlásí ➔ Jídelna nevaří</div>
+                            <div class="text-base text-slate-900 dark:text-white">4. Odhlášení oběda</div>
+                            <div class="text-xs text-slate-600 dark:text-slate-400 font-medium">Žák odhlásí ➔ Jídelna nevaří</div>
                         </div>
                     </button>
                 </div>
             </div>
 
             <!-- VIZUÁLNÍ KARTA AKTUÁLNÍHO KROKU -->
-            <div class="bg-slate-900 border-2 border-cyan-500/40 rounded-3xl p-6 shadow-2xl flex flex-col justify-between min-h-[250px] relative overflow-hidden">
-                <div class="flex items-center justify-between border-b border-slate-800 pb-2 mb-2">
-                    <span class="text-xs font-tech font-bold uppercase text-cyan-400 flex items-center gap-1.5">
+            <div class="bg-white dark:bg-slate-900 border-2 border-sky-400 dark:border-cyan-500/40 rounded-3xl p-6 shadow-xl flex flex-col justify-between min-h-[250px] relative overflow-hidden transition-colors">
+                <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-2 mb-2">
+                    <span class="text-xs font-tech font-bold uppercase text-sky-700 dark:text-cyan-400 flex items-center gap-1.5">
                         <i data-lucide="radio" class="w-4 h-4 animate-pulse"></i> Tok informací v systému:
                     </span>
-                    <span id="step-counter" class="text-sm font-tech font-bold text-slate-400 bg-slate-800 px-3 py-0.5 rounded-lg border border-slate-700">Krok: 0/0</span>
+                    <span id="step-counter" class="text-sm font-tech font-bold text-slate-700 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-3 py-0.5 rounded-lg border border-slate-300 dark:border-slate-700">Krok: 0/0</span>
                 </div>
 
                 <div id="explanation-box" class="flex-1 flex flex-col items-center justify-center text-center p-2">
-                    <p class="text-slate-400 text-base italic">Vyber situaci nahoře.<br>Ukážeme si, proč škola potřebuje informační systém.</p>
+                    <p class="text-slate-600 dark:text-slate-400 text-base italic font-medium">Vyber situaci nahoře.<br>Ukážeme si, proč škola potřebuje informační systém.</p>
                 </div>
 
                 <!-- TLAČÍTKA POSUNU -->
-                <div class="pt-3 border-t border-slate-800 flex items-center gap-3">
-                    <button id="btn-next-step" disabled onclick="nextStep()" class="flex-1 bg-cyan-500 hover:bg-cyan-400 disabled:opacity-25 disabled:cursor-not-allowed text-slate-950 font-black py-3.5 px-6 rounded-2xl text-lg transition flex items-center justify-center gap-3 shadow-[0_0_20px_rgba(6,182,212,0.4)] active:scale-95">
+                <div class="pt-3 border-t border-slate-200 dark:border-slate-800 flex items-center gap-3">
+                    <button id="btn-next-step" disabled onclick="nextStep()" class="flex-1 bg-sky-600 hover:bg-sky-500 dark:bg-cyan-500 dark:hover:bg-cyan-400 disabled:opacity-30 disabled:cursor-not-allowed text-white dark:text-slate-950 font-black py-3.5 px-6 rounded-2xl text-lg transition flex items-center justify-center gap-3 shadow-md active:scale-95">
                         <span>DALŠÍ KROK</span>
                         <i data-lucide="arrow-right" class="w-6 h-6 stroke-[3]"></i>
                     </button>
-                    <button onclick="resetView()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 p-3.5 rounded-2xl border border-slate-700 transition active:scale-95" title="Resetovat">
+                    <button onclick="resetView()" class="bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-300 p-3.5 rounded-2xl border border-slate-300 dark:border-slate-700 transition active:scale-95 shadow-sm" title="Resetovat">
                         <i data-lucide="rotate-ccw" class="w-6 h-6"></i>
                     </button>
                 </div>
             </div>
 
             <!-- PŘEPÍNAČ: KROKOVÁNÍ vs AUTOMAT -->
-            <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-3 flex items-center justify-between text-xs text-slate-400">
-                <span class="font-medium">Režim pro učitele:</span>
-                <div class="flex bg-slate-800 p-1 rounded-xl border border-slate-700">
-                    <button onclick="setPlayMode(false)" id="mode-manual" class="px-3 py-1.5 rounded-lg bg-cyan-500 text-slate-950 font-black transition">Ručně (krokovat)</button>
-                    <button onclick="setPlayMode(true)" id="mode-auto" class="px-3 py-1.5 rounded-lg text-slate-300 font-bold hover:text-white transition">Automat</button>
+            <div class="bg-white/90 dark:bg-slate-900/60 border border-slate-300 dark:border-slate-800 rounded-2xl p-3 flex items-center justify-between text-xs text-slate-700 dark:text-slate-400 shadow-sm transition-colors">
+                <span class="font-bold">Režim pro učitele:</span>
+                <div class="flex bg-slate-100 dark:bg-slate-800 p-1 rounded-xl border border-slate-300 dark:border-slate-700">
+                    <button onclick="setPlayMode(false)" id="mode-manual" class="px-3 py-1.5 rounded-lg bg-sky-600 text-white dark:bg-cyan-500 dark:text-slate-950 font-black transition shadow-sm">Ručně (krokovat)</button>
+                    <button onclick="setPlayMode(true)" id="mode-auto" class="px-3 py-1.5 rounded-lg text-slate-700 dark:text-slate-300 font-bold hover:text-black dark:hover:text-white transition">Automat</button>
                 </div>
             </div>
 
@@ -259,6 +272,30 @@
 
     <script>
         lucide.createIcons();
+
+        // PŘEPÍNÁNÍ SVĚTLÉHO A TMAVÉHO REŽIMU
+        let isDarkMode = false; // Výchozí: Světlý režim pro tabuli
+
+        function toggleTheme() {
+            isDarkMode = !isDarkMode;
+            const body = document.body;
+            const themeText = document.getElementById('theme-text');
+            const themeIcon = document.getElementById('theme-icon');
+
+            if (isDarkMode) {
+                body.classList.add('dark');
+                themeText.innerText = 'Režim: Tmavý';
+                themeIcon.setAttribute('data-lucide', 'moon');
+                themeIcon.className = 'w-5 h-5 text-indigo-400';
+            } else {
+                body.classList.remove('dark');
+                themeText.innerText = 'Režim: Světlý';
+                themeIcon.setAttribute('data-lucide', 'sun');
+                themeIcon.className = 'w-5 h-5 text-amber-500';
+            }
+            lucide.createIcons();
+            updateRailPosition();
+        }
 
         // ZVUKOVÝ SYNTEZÁTOR
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -284,7 +321,7 @@
         function toggleSound() {
             soundEnabled = !soundEnabled;
             document.getElementById('sound-text').innerText = soundEnabled ? 'Zvuk ZAP' : 'Zvuk VYP';
-            document.getElementById('sound-icon').className = soundEnabled ? 'w-5 h-5 text-cyan-400' : 'w-5 h-5 text-slate-500';
+            document.getElementById('sound-icon').className = soundEnabled ? 'w-5 h-5 text-sky-600 dark:text-cyan-400' : 'w-5 h-5 text-slate-400';
         }
 
         function toggleFullscreen() {
@@ -300,36 +337,36 @@
             'grade': {
                 title: "Učitel zapíše známku",
                 steps: [
-                    { layer: 'roles', emoji: '📝', color: '#38bdf8', tone: 400, title: "1. Vstup: Učitel píše známku", desc: "Učitel se přihlásí a klikne: 1 z písemky z informatiky." },
-                    { layer: 'app', emoji: '🛡️', color: '#f59e0b', tone: 550, title: "2. Kontrola: Smí učitel známkovat?", desc: "Systém ověří: Ano, toto je učitel informatiky pro 6. třídu!" },
-                    { layer: 'db', emoji: '💾', color: '#10b981', tone: 700, title: "3. Uložení do databáze", desc: "Záznam je bezpečně zapsán do centrální tabulky školy." },
-                    { layer: 'roles', emoji: '🔔', color: '#38bdf8', tone: 850, title: "4. Výstup: Notifikace v mobilu", desc: "Žák i rodič vidí jedničku ve své aplikaci během 2 sekund!" }
+                    { layer: 'roles', emoji: '📝', color: '#0284c7', tone: 400, title: "1. Vstup: Učitel píše známku", desc: "Učitel se přihlásí a klikne: 1 z písemky z informatiky." },
+                    { layer: 'app', emoji: '🛡️', color: '#d97706', tone: 550, title: "2. Kontrola: Smí učitel známkovat?", desc: "Systém ověří: Ano, toto je učitel informatiky pro 6. třídu!" },
+                    { layer: 'db', emoji: '💾', color: '#059669', tone: 700, title: "3. Uložení do databáze", desc: "Záznam je bezpečně zapsán do centrální tabulky školy." },
+                    { layer: 'roles', emoji: '🔔', color: '#0284c7', tone: 850, title: "4. Výstup: Notifikace v mobilu", desc: "Žák i rodič vidí jedničku ve své aplikaci během 2 sekund!" }
                 ]
             },
             'hack': {
                 title: "Žák zkouší přepsat 5 na 1",
                 steps: [
-                    { layer: 'roles', emoji: '🕵️', color: '#ef4444', tone: 300, title: "1. Vstup: Žák kliká na přepsání", desc: "Žák se přihlásil pod svým účtem a chce změnit 5 na 1." },
-                    { layer: 'app', emoji: '🔒', color: '#ef4444', tone: 160, title: "2. STOP: Kontrola oprávnění!", desc: "Systém hlásí: Role »ŽÁK« smí známky jen číst, ne upravovat!" },
-                    { layer: 'app', emoji: '🚫', color: '#ef4444', tone: 120, title: "3. Akce ZAMÍTNUTA (Chyba 403)", desc: "Databáze zůstává netknutá. Pětka je bezpečně chráněna!" }
+                    { layer: 'roles', emoji: '🕵️', color: '#dc2626', tone: 300, title: "1. Vstup: Žák kliká na přepsání", desc: "Žák se přihlásil pod svým účtem a chce změnit 5 na 1." },
+                    { layer: 'app', emoji: '🔒', color: '#dc2626', tone: 160, title: "2. STOP: Kontrola oprávnění!", desc: "Systém hlásí: Role »ŽÁK« smí známky jen číst, ne upravovat!" },
+                    { layer: 'app', emoji: '🚫', color: '#dc2626', tone: 120, title: "3. Akce ZAMÍTNUTA (Chyba 403)", desc: "Databáze zůstává netknutá. Pětka je bezpečně chráněna!" }
                 ]
             },
             'sick': {
                 title: "Omluvenka od rodiče",
                 steps: [
-                    { layer: 'roles', emoji: '📨', color: '#38bdf8', tone: 450, title: "1. Vstup: Rodič píše zprávu", desc: "Rodič zadá v mobilu: »Petr je nemocný do středy«." },
-                    { layer: 'app', emoji: '🛡️', color: '#f59e0b', tone: 600, title: "2. Kontrola: Je to zákonný zástupce?", desc: "Systém ověří vazbu rodič ➔ dítě a schválí požadavek." },
-                    { layer: 'db', emoji: '💾', color: '#10b981', tone: 750, title: "3. Aktualizace elektronické třídnice", desc: "V databázi se automaticky změní stav na »Omluveno«." },
-                    { layer: 'roles', emoji: '👀', color: '#38bdf8', tone: 800, title: "4. Učitel má hotovo", desc: "Třídní učitel vidí zelenou omluvenku bez papírování." }
+                    { layer: 'roles', emoji: '📨', color: '#0284c7', tone: 450, title: "1. Vstup: Rodič píše zprávu", desc: "Rodič zadá v mobilu: »Petr je nemocný do středy«." },
+                    { layer: 'app', emoji: '🛡️', color: '#d97706', tone: 600, title: "2. Kontrola: Je to zákonný zástupce?", desc: "Systém ověří vazbu rodič ➔ dítě a schválí požadavek." },
+                    { layer: 'db', emoji: '💾', color: '#059669', tone: 750, title: "3. Aktualizace elektronické třídnice", desc: "V databázi se automaticky změní stav na »Omluveno«." },
+                    { layer: 'roles', emoji: '👀', color: '#0284c7', tone: 800, title: "4. Učitel má hotovo", desc: "Třídní učitel vidí zelenou omluvenku bez papírování." }
                 ]
             },
             'lunch': {
                 title: "Odhlášení oběda",
                 steps: [
-                    { layer: 'roles', emoji: '🍽️', color: '#38bdf8', tone: 400, title: "1. Vstup: Kliknutí na »Odhlásit«", desc: "Žák nebo rodič večer odhlásí oběd na zítra." },
-                    { layer: 'app', emoji: '⏰', color: '#f59e0b', tone: 600, title: "2. Kontrola času (Limit 14:00)", desc: "Systém zkontroluje: Je ještě včas? Ano, stihli to!" },
-                    { layer: 'db', emoji: '💾', color: '#10b981', tone: 750, title: "3. Přepočet kreditu & Zápis", desc: "Peníze se vrátí na účet a počet porcí pro jídelnu klesne o 1." },
-                    { layer: 'roles', emoji: '👨‍🍳', color: '#38bdf8', tone: 850, title: "4. Kuchařky přesně vědí, kolik vařit", desc: "Jídelna ráno vidí přesný počet porcí – žádné plýtvání!" }
+                    { layer: 'roles', emoji: '🍽️', color: '#0284c7', tone: 400, title: "1. Vstup: Kliknutí na »Odhlásit«", desc: "Žák nebo rodič večer odhlásí oběd na zítra." },
+                    { layer: 'app', emoji: '⏰', color: '#d97706', tone: 600, title: "2. Kontrola času (Limit 14:00)", desc: "Systém zkontroluje: Je ještě včas? Ano, stihli to!" },
+                    { layer: 'db', emoji: '💾', color: '#059669', tone: 750, title: "3. Přepočet kreditu & Zápis", desc: "Peníze se vrátí na účet a počet porcí pro jídelnu klesne o 1." },
+                    { layer: 'roles', emoji: '👨‍🍳', color: '#0284c7', tone: 850, title: "4. Kuchařky přesně vědí, kolik vařit", desc: "Jídelna ráno vidí přesný počet porcí – žádné plýtvání!" }
                 ]
             }
         };
@@ -349,9 +386,8 @@
             const cRect = container.getBoundingClientRect();
             const dRect = dock.getBoundingClientRect();
 
-            // Vodorovný střed doku
             const centerX = (dRect.left - cRect.left) + (dRect.width / 2);
-            rail.style.left = `${centerX - 3}px`;
+            rail.style.left = `${centerX - 4}px`;
         }
 
         // PŘESNÝ DYNAMICKÝ VÝPOČET POZICE KULIČKY
@@ -365,23 +401,31 @@
             const containerRect = container.getBoundingClientRect();
             const dockRect = targetDock.getBoundingClientRect();
 
-            // Matematicky přesný střed kotevního bodu
             const targetTop = (dockRect.top - containerRect.top) + (dockRect.height / 2) - (packet.offsetHeight / 2);
             const targetLeft = (dockRect.left - containerRect.left) + (dockRect.width / 2) - (packet.offsetWidth / 2);
 
             packet.style.top = `${targetTop}px`;
             packet.style.left = `${targetLeft}px`;
             packet.style.opacity = '1';
-            packet.style.backgroundColor = step.color || '#38bdf8';
-            packet.style.boxShadow = `0 0 30px ${step.color || '#38bdf8'}`;
+            packet.style.backgroundColor = step.color || '#0284c7';
+            packet.style.boxShadow = `0 0 35px ${step.color || '#0284c7'}`;
 
             document.getElementById('packet-icon').innerText = step.emoji || '📨';
         }
 
         function setPlayMode(auto) {
             isAutoPlay = auto;
-            document.getElementById('mode-manual').className = !auto ? 'px-3 py-1.5 rounded-lg bg-cyan-500 text-slate-950 font-black transition' : 'px-3 py-1.5 rounded-lg text-slate-300 font-bold hover:text-white transition';
-            document.getElementById('mode-auto').className = auto ? 'px-3 py-1.5 rounded-lg bg-cyan-500 text-slate-950 font-black transition' : 'px-3 py-1.5 rounded-lg text-slate-300 font-bold hover:text-white transition';
+            const btnManual = document.getElementById('mode-manual');
+            const btnAuto = document.getElementById('mode-auto');
+
+            if (!auto) {
+                btnManual.className = 'px-3 py-1.5 rounded-lg bg-sky-600 text-white dark:bg-cyan-500 dark:text-slate-950 font-black transition shadow-sm';
+                btnAuto.className = 'px-3 py-1.5 rounded-lg text-slate-700 dark:text-slate-300 font-bold hover:text-black dark:hover:text-white transition';
+            } else {
+                btnManual.className = 'px-3 py-1.5 rounded-lg text-slate-700 dark:text-slate-300 font-bold hover:text-black dark:hover:text-white transition';
+                btnAuto.className = 'px-3 py-1.5 rounded-lg bg-sky-600 text-white dark:bg-cyan-500 dark:text-slate-950 font-black transition shadow-sm';
+            }
+
             if (isAutoPlay && currentScenario && currentStepIndex < currentScenario.steps.length - 1) {
                 scheduleNextStep();
             }
@@ -393,8 +437,10 @@
             currentStepIndex = -1;
             document.getElementById('btn-next-step').disabled = false;
             
-            document.querySelectorAll('.scenario-btn').forEach(b => b.classList.remove('ring-2', 'ring-cyan-400', 'bg-slate-750'));
-            event.currentTarget.classList.add('ring-2', 'ring-cyan-400');
+            document.querySelectorAll('.scenario-btn').forEach(b => {
+                b.classList.remove('ring-2', 'ring-sky-600', 'dark:ring-cyan-400', 'bg-sky-100', 'dark:bg-slate-750');
+            });
+            event.currentTarget.classList.add('ring-2', 'ring-sky-600', 'dark:ring-cyan-400', 'bg-sky-50');
 
             updateRailPosition();
             nextStep();
@@ -434,11 +480,11 @@
             // Velká vizuální karta aktuálního kroku
             document.getElementById('explanation-box').innerHTML = `
                 <div class="flex flex-col items-center justify-center animate-[fadeIn_0.25s_ease-out]">
-                    <div class="w-16 h-16 rounded-2xl bg-slate-800 text-cyan-400 flex items-center justify-center border-2 border-slate-700 shadow-lg mb-3">
+                    <div class="w-16 h-16 rounded-2xl bg-sky-100 dark:bg-slate-800 text-sky-800 dark:text-cyan-400 flex items-center justify-center border-2 border-sky-300 dark:border-slate-700 shadow-md mb-3">
                         <span class="text-3xl">${step.emoji}</span>
                     </div>
-                    <h4 class="text-xl md:text-2xl font-black text-white tracking-wide mb-1 font-sans">${step.title}</h4>
-                    <p class="text-sm md:text-base text-slate-300 font-medium">${step.desc}</p>
+                    <h4 class="text-xl md:text-2xl font-black text-slate-900 dark:text-white tracking-wide mb-1 font-sans">${step.title}</h4>
+                    <p class="text-sm md:text-base text-slate-700 dark:text-slate-300 font-semibold">${step.desc}</p>
                 </div>
             `;
             lucide.createIcons();
@@ -457,19 +503,20 @@
             currentScenario = null;
             currentStepIndex = -1;
             document.querySelectorAll('.layer-box').forEach(l => l.classList.remove('layer-active'));
-            document.querySelectorAll('.scenario-btn').forEach(b => b.classList.remove('ring-2', 'ring-cyan-400'));
+            document.querySelectorAll('.scenario-btn').forEach(b => {
+                b.classList.remove('ring-2', 'ring-sky-600', 'dark:ring-cyan-400', 'bg-sky-50');
+            });
             
             const packet = document.getElementById('data-packet');
             packet.style.opacity = '0';
 
             document.getElementById('step-counter').innerText = 'Krok: 0/0';
             document.getElementById('explanation-box').innerHTML = `
-                <p class="text-slate-400 text-base italic">Vyber situaci nahoře.<br>Ukážeme si, proč škola potřebuje informační systém.</p>
+                <p class="text-slate-600 dark:text-slate-400 text-base italic font-medium">Vyber situaci nahoře.<br>Ukážeme si, proč škola potřebuje informační systém.</p>
             `;
             document.getElementById('btn-next-step').disabled = true;
         }
 
-        // PŘEPOČÍTÁNÍ PŘI ZMĚNĚ VELIKOSTI OBRAZOVKY / FULLSCREENU
         window.addEventListener('resize', () => {
             updateRailPosition();
             if (currentScenario && currentStepIndex >= 0) {
@@ -477,7 +524,6 @@
             }
         });
 
-        // Inicializace linky po načtení stránky
         window.addEventListener('DOMContentLoaded', () => {
             setTimeout(updateRailPosition, 100);
         });
